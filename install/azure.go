@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os/exec"
+	"strings"
 )
 
 type azureVersionValidation struct{}
@@ -62,7 +63,7 @@ func (k *K8sInstaller) createAzureServicePrincipal(ctx context.Context) error {
 		cmd := azCommand(args...)
 		bytes, err := cmd.Output()
 		if err != nil {
-			return fmt.Errorf("unable to execute \"az %s\": %w", args, err)
+			return fmt.Errorf("unable to execute \"az %s\": %w", strings.Join(args, " "), err)
 		}
 
 		p := azurePrincipalOutput{}
@@ -83,7 +84,7 @@ func (k *K8sInstaller) createAzureServicePrincipal(ctx context.Context) error {
 	cmd := azCommand(args...)
 	bytes, err := cmd.Output()
 	if err != nil {
-		return fmt.Errorf("unable to execute \"az %s\": %w", args, err)
+		return fmt.Errorf("unable to execute \"az %s\": %w", strings.Join(args, " "), err)
 	}
 
 	ai := accountInfo{}
@@ -101,7 +102,7 @@ func (k *K8sInstaller) createAzureServicePrincipal(ctx context.Context) error {
 	cmd = azCommand(args...)
 	bytes, err = cmd.Output()
 	if err != nil {
-		return fmt.Errorf("unable to execute \"az %s\": %w", args, err)
+		return fmt.Errorf("unable to execute \"az %s\": %w", strings.Join(args, " "), err)
 	}
 
 	clusterInfo := aksClusterInfo{}

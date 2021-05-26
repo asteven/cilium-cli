@@ -18,6 +18,7 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/cilium/cilium-cli/defaults"
@@ -339,13 +340,13 @@ func (p *Parameters) UIPortForwardCommand(ctx context.Context) error {
 		c.Stdout = p.Writer
 		c.Stderr = p.Writer
 		if err := c.Run(); err != nil {
-			p.Log("⚠️  Unable to execute command %s %v: %s", cmd, args, err)
+			p.Log("⚠️  Unable to execute command %s %s: %s", cmd, strings.Join(args, " "), err)
 			p.Log("ℹ️  Opening the following URL in your browser:" + url)
 		}
 	}()
 
 	if err := c.Run(); err != nil {
-		return fmt.Errorf("unable to execute command %s %v: %s", cmd, args, err)
+		return fmt.Errorf("unable to execute command %s %s: %s", cmd, strings.Join(args, " "), err)
 	}
 
 	return nil

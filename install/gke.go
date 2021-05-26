@@ -46,7 +46,7 @@ func (k *K8sInstaller) gkeNativeRoutingCIDR(ctx context.Context, contextName str
 	result := exec.Command("gcloud", args...)
 	bytes, err := result.Output()
 	if err != nil {
-		return "", fmt.Errorf("unable to execute gcloud %s to extract native routing CIDR: %w", args, err)
+		return "", fmt.Errorf("unable to execute gcloud %s to extract native routing CIDR: %w", strings.Join(args, " "), err)
 	}
 
 	cidr := strings.TrimSuffix(string(bytes), "\n")

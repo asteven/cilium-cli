@@ -18,6 +18,7 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/cilium/cilium-cli/defaults"
@@ -415,7 +416,7 @@ func (p *Parameters) PortForwardCommand(ctx context.Context) error {
 	c.Stderr = p.Writer
 
 	if err := c.Run(); err != nil {
-		return fmt.Errorf("unable to execute command %s %v: %s", cmd, args, err)
+		return fmt.Errorf("unable to execute command %s %s: %s", cmd, strings.Join(args, " "), err)
 	}
 
 	return nil
